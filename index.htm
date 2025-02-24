@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sustainability Tips Platform</title>
+    <style>
+        /* CSS Styles */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.5s ease;
+        }
+
+        header {
+            background-color: #2ecc71;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            animation: fadeInDown 1s;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 18px;
+            animation: fadeInUp 1s;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        /* Contribute Section */
+
+        #contribute {
+            background-color: #eafaf1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            animation: fadeIn 1s;
+        }
+
+        #contribute h2 {
+            margin-top: 0;
+            color: #27ae60;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-container input,
+        .input-container textarea {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        .input-container button {
+            padding: 12px;
+            font-size: 18px;
+            color: white;
+            background-color: #27ae60;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .input-container button:hover {
+            background-color: #1e8449;
+        }
+
+        /* Tips Section */
+
+        #tips h2 {
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+
+        .tips-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tip-card {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: slideIn 0.5s;
+        }
+
+        .tip-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .tip-card p {
+            margin: 10px 0;
+            color: #34495e;
+        }
+
+        .tip-card .tip-info {
+            font-size: 14px;
+            color: #7f8c8d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tip-card .reactions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tip-card .reactions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+
+        .tip-card .reactions button:hover {
+            transform: scale(1.2);
+        }
+
+        /* Modal */
+
+        .info-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            from, 20%, 53%, 80%, to {
+                transform: translateY(0);
+            }
+            40%, 43% {
+                transform: translateY(-10px);
+            }
+            70% {
+                transform: translateY(-5px);
+            }
+            90% {
+                transform: translateY(-2px);
+            }
+        }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto; /* 10% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 8px;
+            animation: fadeIn 0.5s;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Theme Selector */
+
+        .theme-selector {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .theme-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        /* Footer */
+
+        footer {
+            background-color: #2ecc71;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        /* Animations */
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes slideIn {
+            from {transform: translateX(-20px); opacity: 0;}
+            to {transform: translateX(0); opacity: 1;}
+        }
+
+        /* Themes */
+
+        body.theme-forest {
+            background-color: #eafaf1;
+        }
+
+        body.theme-ocean {
+            background-color: #e0f7fa;
+        }
+
+        body.theme-sunset {
+            background-color: #ffe0b2;
+        }
+
+        body.theme-lavender {
+            background-color: #f3e5f5;
+        }
+
+    </style>
+</head>
+<body class="theme-forest">
+
+    <!-- Header -->
+    <header>
+        <h1>Sustainability Tips</h1>
+        <p>Share and discover eco-friendly lifestyle tips</p>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Contribute Section -->
+        <section id="contribute">
+            <h2>Share Your Tip</h2>
+            <div class="input-container">
+                <input type="text" id="name-input" placeholder="Your name..." maxlength="50">
+                <textarea id="tip-input" placeholder="Enter your sustainability tip..." maxlength="200"></textarea>
+                <button id="submit-tip">Share Tip</button>
+            </div>
+        </section>
+
+        <!-- Tips Section -->
+        <section id="tips">
+            <h2>Community Tips</h2>
+            <div class="tips-container" id="tips-container">
+                <!-- Tips will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Info Modal Trigger Button -->
+        <button id="info-btn" class="info-button">ℹ️</button>
+
+        <!-- Theme Selector -->
+        <div class="theme-selector">
+            <button class="theme-btn" data-theme="forest">🌲</button>
+            <button class="theme-btn" data-theme="ocean">🌊</button>
+            <button class="theme-btn" data-theme="sunset">🌅</button>
+            <button class="theme-btn" data-theme="lavender">💜</button>
+        </div>
+
+        <!-- Info Modal -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>About Sustainability Tips</h2>
+                <p>Welcome to our sustainability tips platform! Here you can:</p>
+                <ul>
+                    <li>Share your own eco-friendly tips</li>
+                    <li>Discover new ways to live sustainably</li>
+                    <li>Engage with the community by reacting to tips</li>
+                </ul>
+                <p>Together, we can make a difference and protect our planet for future generations.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>“Small actions x Lots of people = Big change”</p>
+    </footer>
+
+    <!-- JavaScript Code -->
+    <script>
+        // JavaScript for interactivity
+
+        const tipsContainer = document.getElementById('tips-container');
+        const submitTipBtn = document.getElementById('submit-tip');
+        const nameInput = document.getElementById('name-input');
+        const tipInput = document.getElementById('tip-input');
+        const infoBtn = document.getElementById('info-btn');
+        const modal = document.getElementById('modal');
+        const closeBtn = document.querySelector('.close-btn');
+        const themeBtns = document.querySelectorAll('.theme-btn');
+
+        let tips = [];
+
+        // Load tips from the server
+        function loadTips() {
+            fetch('/api/tips')
+                .then(response => response.json())
+                .then(data => {
+                    tips = data;
+                    renderTips();
+                })
+                .catch(error => {
+                    console.error('Error fetching tips:', error);
+                });
+        }
+
+        // Function to render tips
+        function renderTips() {
+            tipsContainer.innerHTML = '';
+            tips.forEach((tip, index) => {
+                const tipCard = document.createElement('div');
+                tipCard.classList.add('tip-card');
+
+                tipCard.innerHTML = `
+                    <h3>${sanitizeInput(tip.name) || 'Anonymous'}</h3>
+                    <p>${sanitizeInput(tip.content)}</p>
+                    <div class="tip-info">
+                        <span>${new Date(tip.date).toLocaleString()}</span>
+                        <div class="reactions">
+                            <button onclick="addReaction(${index}, 'like')">👍 ${tip.reactions.like}</button>
+                            <button onclick="addReaction(${index}, 'love')">❤️ ${tip.reactions.love}</button>
+                        </div>
+                    </div>
+                `;
+                tipsContainer.appendChild(tipCard);
+            });
+        }
+
+        // Function to add a new tip
+        submitTipBtn.addEventListener('click', () => {
+            const name = sanitizeInput(nameInput.value.trim());
+            const content = sanitizeInput(tipInput.value.trim());
+
+            if (content === '') {
+                alert('Please enter a tip!');
+                return;
+            }
+
+            const tipData = { name, content };
+
+            fetch('/api/tips', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(tipData),
+            })
+            .then(response => response.json())
+            .then(tip => {
+                tips.unshift(tip);
+                renderTips();
+                nameInput.value = '';
+                tipInput.value = '';
+            })
+            .catch(error => {
+                console.error('Error adding tip:', error);
+            });
+        });
+
+        // Function to add a reaction
+        function addReaction(index, type) {
+            fetch(`/api/tips/${index}/reactions`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ type }),
+            })
+            .then(response => response.json())
+            .then(() => {
+                tips[index].reactions[type]++;
+                renderTips();
+            })
+            .catch(error => {
+                console.error('Error updating reactions:', error);
+            });
+        }
+
+        // Input sanitization to prevent XSS attacks
+        function sanitizeInput(input) {
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML;
+        }
+
+        // Modal functionality
+        infoBtn.addEventListener('click', () => {
+            modal.style.display = 'block';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Theme selector functionality
+        themeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const theme = btn.getAttribute('data-theme');
+                document.body.className = `theme-${theme}`;
+            });
+        });
+
+        // Load tips when the page loads
+        window.addEventListener('load', () => {
+            loadTips();
+        });
+    </script>
+</body>
+</html>
